@@ -1,0 +1,33 @@
+.calculator {
+    width: 401px;
+    height: 197px;
+    margin: 79px 0 0 76px;
+
+    h1 {
+        font-weight: 600;
+        font-size: 20px;
+        color: #007FC7;
+    }
+
+    input {
+        width: 400px;
+        height: 40px;
+        border: 1px solid #C4C4C4;
+        box-sizing: border-box;
+        border-radius: 20px;
+        font-size: 16px;
+        line-height: 19px;
+        display: flex;
+        align-items: center;
+        color: #505050;
+        padding-left: 15px;
+        outline: none;
+        margin-top: 48px;
+    }
+
+    &__result-wrap {
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+}

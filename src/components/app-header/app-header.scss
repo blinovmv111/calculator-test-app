@@ -1,0 +1,17 @@
+header {
+    height: 68px;
+    display: flex;
+    align-items: flex-end;
+    align-content: center;
+    justify-content: flex-end;
+    background: #093843;
+    padding-right: 39px;
+}
+
+.btn-wrapper {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    width: 304px;
+}
