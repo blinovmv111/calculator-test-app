@@ -1,21 +1,27 @@
-const dollarRateLoaded = (newData) => {
+const dollarRateLoaded = (data) => {
   return {
     type: "DOLLAR_RATE_LOADED",
-    payload: newData,
+    payload: data,
   };
 };
 
-const inputSumLoaded = (newData) => {
+const inputSumFunction = (data) => {
   return {
-    type: "INPUT_SUM_LOADED",
-    payload: newData,
+    type: "INPUT_SUM_FUNCTION",
+    payload: data,
   };
 };
 
-const outputSumLoaded = (newData) => {
+const resultSumFunction = (data) => {
   return {
-    type: "OUTPUT_SUM_LOADED",
-    payload: newData,
+    type: "RESULT_SUM_FUNCTION",
+    payload: data,
+  };
+};
+
+const writeDataForDisplay = () => {
+  return {
+    type: "WRITE_DATA_FOR_DISPLAY",
   };
 };
 
@@ -39,8 +45,9 @@ const dataError = () => {
 
 export {
   dollarRateLoaded,
-  inputSumLoaded,
-  outputSumLoaded,
+  inputSumFunction,
+  resultSumFunction,
+  writeDataForDisplay,
   toggleVisibleResult,
   dataRequested,
   dataError,

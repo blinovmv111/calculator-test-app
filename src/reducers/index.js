@@ -1,7 +1,10 @@
 const initialState = {
   dollarRate: 0,
   inputSum: 0,
-  outputSum: 0,
+  resultSum: 0,
+  displayDollarRate: 0,
+  displayInputSum: 0,
+  displayResultSum: 0,
   visibleResult: false,
   loading: false,
   error: false,
@@ -15,15 +18,22 @@ const reducer = (state = initialState, action) => {
         dollarRate: action.payload,
         loading: !state.loading,
       };
-    case "INPUT_SUM_LOADED":
+    case "INPUT_SUM_FUNCTION":
       return {
         ...state,
         inputSum: action.payload,
       };
-    case "OUTPUT_SUM_LOADED":
+    case "RESULT_SUM_FUNCTION":
       return {
         ...state,
-        outputSum: action.payload,
+        resultSum: action.payload,
+      };
+    case "WRITE_DATA_FOR_DISPLAY":
+      return {
+        ...state,
+        displayDollarRate: state.dollarRate,
+        displayInputSum: state.inputSum,
+        displayResultSum: state.resultSum,
       };
     case "TOGGLE_VISIBLE_RESULT":
       return {

@@ -1,11 +1,15 @@
 import React from "react";
 import "./calculator_result_field.scss";
 
-const CalculatorResultField = ({ inputSum, dollarRate, outputSum }) => {
+const CalculatorResultField = ({
+  displayDollarRate,
+  displayInputSum,
+  displayResultSum,
+}) => {
   return (
     <div className="result">
-      <span>{inputSum} грн</span> по курсу <span>{dollarRate} $</span> это{" "}
-      <span>{outputSum} $</span>
+      <span>{displayInputSum} грн</span> по курсу{" "}
+      <span>{displayDollarRate} $</span> это <span>{displayResultSum} $</span>
     </div>
   );
 };

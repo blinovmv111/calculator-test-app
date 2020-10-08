@@ -14,7 +14,14 @@ function App({ ApiService }) {
           <Switch>
             <Route path="/" component={CalculatorPage} exact />
             <Route path="/calculatorPage/" component={CalculatorPage} />
-            <Route path="/textPage/" component={TextPage} />
+            <Route path="/textPage/" component={TextPage} exact />
+            <Route
+              path="/textPage/:id"
+              render={({ match }) => {
+                const { id } = match.params;
+                return <TextPage id={id} />;
+              }}
+            />
           </Switch>
         </div>
       </div>

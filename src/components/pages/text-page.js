@@ -3,7 +3,7 @@ import TextBlock from "../textBlock";
 
 class TextPage extends Component {
   render() {
-    return <TextBlock />;
+    return <TextBlock id={this.props.id} />;
   }
 }
 

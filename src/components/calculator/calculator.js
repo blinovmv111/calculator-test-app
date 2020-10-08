@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import {
   dollarRateLoaded,
-  inputSumLoaded,
-  outputSumLoaded,
+  inputSumFunction,
+  resultSumFunction,
+  writeDataForDisplay,
   toggleVisibleResult,
   dataRequested,
   dataError,
@@ -18,12 +19,16 @@ const Calculator = (props) => {
     ApiService,
     dollarRate,
     inputSum,
-    outputSum,
+    resultSum,
+    displayDollarRate,
+    displayInputSum,
+    displayResultSum,
     visibleResult,
     error,
     dollarRateLoaded,
-    inputSumLoaded,
-    outputSumLoaded,
+    inputSumFunction,
+    resultSumFunction,
+    writeDataForDisplay,
     toggleVisibleResult,
     dataRequested,
     dataError,
@@ -34,35 +39,40 @@ const Calculator = (props) => {
 
     ApiService.getDollarSale()
       .then((res) => dollarRateLoaded(res))
+      .then(() => console.log(dollarRate, inputSum, resultSum))
       .catch(() => dataError());
   }, []);
 
-  function onInputValueChange(e) {
+  function changeInputHendler(e) {
+    console.log(e.target.value);
     if (!isNaN(e.target.value) && isFinite(e.target.value)) {
-      inputSumLoaded(e.target.value);
-      outputSumLoaded(Math.floor(+e.target.value * dollarRate * 100) / 100);
+      inputSumFunction(+e.target.value);
+      console.log(inputSum);
+      resultSumFunction(Math.floor(+e.target.value * dollarRate * 100) / 100);
+      console.log(dollarRate, inputSum, resultSum);
     } else {
-      inputSumLoaded("Введите число!");
+      inputSumFunction("Введите число!");
     }
   }
 
   const field = visibleResult && (
     <CalculatorResultField
-      inputSum={inputSum}
-      dollarRate={dollarRate}
-      outputSum={outputSum}
+      displayInputSum={displayInputSum}
+      displayDollarRate={displayDollarRate}
+      displayResultSum={displayResultSum}
     />
   );
 
-  function onToggleVisibleResult() {
+  function countUp() {
     dataRequested();
     ApiService.getDollarSale()
       .then((res) => dollarRateLoaded(res))
+      .then(() => writeDataForDisplay())
       .then(() => toggleVisibleResult())
       .catch(() => dataError());
   }
 
-  function onSubmit(e) {
+  function submitHendler(e) {
     e.preventDefault();
   }
 
@@ -73,20 +83,16 @@ const Calculator = (props) => {
   return (
     <div className="calculator">
       <h1 className="title">Калькулятор</h1>
-      <form className="inputBlock" onSubmit={onSubmit}>
+      <form className="inputBlock" onSubmit={submitHendler}>
         <input
           type="text"
           placeholder="Сумма, грн"
-          onChange={onInputValueChange}
+          onChange={changeInputHendler}
           // value={inputSum}
         />
         <div className="calculator__result-wrap">{field}</div>
 
-        <button
-          type="submit"
-          className="btn btn--count"
-          onClick={onToggleVisibleResult}
-        >
+        <button type="submit" className="btn btn--count" onClick={countUp}>
           Посчитать
         </button>
       </form>
@@ -98,7 +104,10 @@ const mapStateToProps = (state) => {
   return {
     dollarRate: state.dollarRate,
     inputSum: state.inputSum,
-    outputSum: state.outputSum,
+    resultSum: state.resultSum,
+    displayDollarRate: state.displayDollarRate,
+    displayInputSum: state.displayInputSum,
+    displayResultSum: state.displayResultSum,
     visibleResult: state.visibleResult,
     loading: state.loading,
     error: state.error,
@@ -107,9 +116,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   dollarRateLoaded,
-  inputSumLoaded,
-  outputSumLoaded,
+  inputSumFunction,
+  resultSumFunction,
   toggleVisibleResult,
+  writeDataForDisplay,
   dataRequested,
   dataError,
 };
