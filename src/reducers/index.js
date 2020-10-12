@@ -12,10 +12,21 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "DOLLAR_RATE_LOADED":
+    // case "DOLLAR_RATE_LOADED":
+    //   return {
+    //     ...state,
+    //     dollarRate: action.payload,
+    //     loading: !state.loading,
+    //   };
+    case "PUT_DATA":
       return {
         ...state,
         dollarRate: action.payload,
+        loading: false,
+      };
+    case "LOAD_DATA":
+      return {
+        ...state,
         loading: !state.loading,
       };
     case "INPUT_SUM_FUNCTION":
@@ -40,11 +51,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         visibleResult: true,
       };
-    case "DATA_REQUESTED":
-      return {
-        ...state,
-        loading: true,
-      };
+    // case "DATA_REQUESTED":
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
     case "DATA_ERROR":
       return {
         ...state,

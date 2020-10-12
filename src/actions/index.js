@@ -1,7 +1,20 @@
-const dollarRateLoaded = (data) => {
+// const dollarRateLoaded = (data) => {
+//   return {
+//     type: "DOLLAR_RATE_LOADED",
+//     payload: data,
+//   };
+// };
+
+const putData = (dataFromServer) => {
   return {
-    type: "DOLLAR_RATE_LOADED",
-    payload: data,
+    type: "PUT_DATA",
+    payload: dataFromServer,
+  };
+};
+
+const loadData = () => {
+  return {
+    type: "LOAD_DATA",
   };
 };
 
@@ -31,11 +44,11 @@ const toggleVisibleResult = () => {
   };
 };
 
-const dataRequested = () => {
-  return {
-    type: "DATA_REQUESTED",
-  };
-};
+// const dataRequested = () => {
+//   return {
+//     type: "DATA_REQUESTED",
+//   };
+// };
 
 const dataError = () => {
   return {
@@ -44,11 +57,13 @@ const dataError = () => {
 };
 
 export {
-  dollarRateLoaded,
+  // dollarRateLoaded,
   inputSumFunction,
   resultSumFunction,
   writeDataForDisplay,
   toggleVisibleResult,
-  dataRequested,
+  // dataRequested,
   dataError,
+  putData,
+  loadData,
 };

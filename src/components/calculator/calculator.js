@@ -1,13 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  dollarRateLoaded,
-  inputSumFunction,
-  resultSumFunction,
-  writeDataForDisplay,
-  toggleVisibleResult,
-  dataRequested,
-  dataError,
-} from "../../actions";
+import * as actions from "../../actions";
 import "./calculator.scss";
 import { connect } from "react-redux";
 import WithApiService from "../hoc";
@@ -18,38 +10,35 @@ const Calculator = (props) => {
   const {
     ApiService,
     dollarRate,
-    inputSum,
-    resultSum,
+    // inputSum,
+    // resultSum,
     displayDollarRate,
     displayInputSum,
     displayResultSum,
     visibleResult,
     error,
-    dollarRateLoaded,
+    // dollarRateLoaded,
     inputSumFunction,
     resultSumFunction,
     writeDataForDisplay,
     toggleVisibleResult,
-    dataRequested,
+    // dataRequested,
     dataError,
+    loadData,
+    putData,
   } = props;
 
   useEffect(() => {
-    dataRequested();
-
+    loadData();
     ApiService.getDollarSale()
-      .then((res) => dollarRateLoaded(res))
-      .then(() => console.log(dollarRate, inputSum, resultSum))
+      .then((res) => putData(res))
       .catch(() => dataError());
   }, []);
 
-  function changeInputHendler(e) {
-    console.log(e.target.value);
+  function changeInputHandler(e) {
     if (!isNaN(e.target.value) && isFinite(e.target.value)) {
       inputSumFunction(+e.target.value);
-      console.log(inputSum);
       resultSumFunction(Math.floor(+e.target.value * dollarRate * 100) / 100);
-      console.log(dollarRate, inputSum, resultSum);
     } else {
       inputSumFunction("Введите число!");
     }
@@ -63,16 +52,19 @@ const Calculator = (props) => {
     />
   );
 
-  function countUp() {
-    dataRequested();
-    ApiService.getDollarSale()
-      .then((res) => dollarRateLoaded(res))
-      .then(() => writeDataForDisplay())
-      .then(() => toggleVisibleResult())
-      .catch(() => dataError());
-  }
+  const countUp = async () => {
+    await loadData();
+    await writeDataForDisplay();
+    await toggleVisibleResult();
 
-  function submitHendler(e) {
+    // ApiService.getDollarSale()
+    //   .then((res) => dollarRateLoaded(res))
+    //   .then(() => writeDataForDisplay())
+    //   .then(() => toggleVisibleResult())
+    //   .catch(() => dataError());
+  };
+
+  function submitHandler(e) {
     e.preventDefault();
   }
 
@@ -83,11 +75,11 @@ const Calculator = (props) => {
   return (
     <div className="calculator">
       <h1 className="title">Калькулятор</h1>
-      <form className="inputBlock" onSubmit={submitHendler}>
+      <form className="inputBlock" onSubmit={submitHandler}>
         <input
           type="text"
           placeholder="Сумма, грн"
-          onChange={changeInputHendler}
+          onChange={changeInputHandler}
           // value={inputSum}
         />
         <div className="calculator__result-wrap">{field}</div>
@@ -114,19 +106,17 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = {
-  dollarRateLoaded,
-  inputSumFunction,
-  resultSumFunction,
-  toggleVisibleResult,
-  writeDataForDisplay,
-  dataRequested,
-  dataError,
-};
+// const mapDispatchToProps = {
+//   dollarRateLoaded,
+//   inputSumFunction,
+//   resultSumFunction,
+//   toggleVisibleResult,
+//   writeDataForDisplay,
+//   dataRequested,
+//   dataError,
+// };
 
-export default WithApiService()(
-  connect(mapStateToProps, mapDispatchToProps)(Calculator)
-);
+export default WithApiService()(connect(mapStateToProps, actions)(Calculator));
 
 // componentDidMount() {
 //   this.apiService.getData().then((res) =>
