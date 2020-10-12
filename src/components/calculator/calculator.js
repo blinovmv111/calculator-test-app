@@ -1,13 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  dollarRateLoaded,
-  inputSumFunction,
-  resultSumFunction,
-  writeDataForDisplay,
-  toggleVisibleResult,
-  dataRequested,
-  dataError,
-} from "../../actions";
+import * as actions from "../../actions";
 import "./calculator.scss";
 import { connect } from "react-redux";
 import WithApiService from "../hoc";
@@ -114,19 +106,17 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = {
-  dollarRateLoaded,
-  inputSumFunction,
-  resultSumFunction,
-  toggleVisibleResult,
-  writeDataForDisplay,
-  dataRequested,
-  dataError,
-};
+// const mapDispatchToProps = {
+//   dollarRateLoaded,
+//   inputSumFunction,
+//   resultSumFunction,
+//   toggleVisibleResult,
+//   writeDataForDisplay,
+//   dataRequested,
+//   dataError,
+// };
 
-export default WithApiService()(
-  connect(mapStateToProps, mapDispatchToProps)(Calculator)
-);
+export default WithApiService()(connect(mapStateToProps, actions)(Calculator));
 
 // componentDidMount() {
 //   this.apiService.getData().then((res) =>
