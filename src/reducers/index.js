@@ -27,7 +27,7 @@ const reducer = (state = initialState, action) => {
     case "LOAD_DATA":
       return {
         ...state,
-        loading: !state.loading,
+        loading: true,
       };
     case "INPUT_SUM_FUNCTION":
       return {
@@ -45,6 +45,7 @@ const reducer = (state = initialState, action) => {
         displayDollarRate: state.dollarRate,
         displayInputSum: state.inputSum,
         displayResultSum: state.resultSum,
+        loading: false,
       };
     case "TOGGLE_VISIBLE_RESULT":
       return {

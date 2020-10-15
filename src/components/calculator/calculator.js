@@ -29,10 +29,14 @@ const Calculator = (props) => {
   } = props;
 
   useEffect(() => {
-    loadData();
-    ApiService.getDollarSale()
-      .then((res) => putData(res))
-      .catch(() => dataError());
+    console.log(dollarRate);
+    if (!dollarRate) {
+      loadData();
+    }
+
+    // ApiService.getDollarSale()
+    //   .then((res) => putData(res))
+    //   .catch(() => dataError());
   }, []);
 
   function changeInputHandler(e) {
